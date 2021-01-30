@@ -1,13 +1,29 @@
 # Import the Flask class form the flask module
-from flask import Flask, render_template, redirect,url_for,request
+from flask import Flask, render_template, redirect,url_for, request, session,flash
+from functools import wraps
 
 # create the application object based on Flask class
 app= Flask(__name__)
 
-# use decorators to link the function to a URL
+# Add secret key required for using sessions, used as a key for session encryption. secret key is a variable of the Flask class
+app.secret_key="my_secret_key"
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args,**kwargs)
+        else:
+            flash('You need to log in.')
+            return redirect(url_for('login'))
+    return wrap
+
+# use app.route decorator function to link path endpoint to a URL
 @app.route('/')
+@login_required
 def home():
-      return "Hello, World!" # returns the string Hello World
+     # return "Hello, World!" # returns the string Hello World
+      return render_template('index.html')
 
 @app.route('/welcome')
 def welcome():
@@ -21,8 +37,17 @@ def login():
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error = 'Invalid credentials, please try again'
         else:
+            session['logged_in'] = True
+            flash("You were just logged in")
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
+
+@app.route('/logout')
+@login_required
+def logout():
+    session.pop('logged_in', None)
+    flash("You were just logged out")
+    return redirect(url_for('welcome'))
 
 
 # start the server with the run() method

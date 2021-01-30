@@ -1,11 +1,7 @@
-<html>
-  <head>
-    <title> Login page </title>
-    <meta name="viewport" content="width+device-width, initial-scale=1.0">
-    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
-  </head>
-<body>
-  <div class= "container">
+
+  {% extends "base.html" %}
+  {% block content %}
+
     <h1>Please login</h1>
     <br>
     <form action="" method="post">
@@ -13,9 +9,4 @@
       <input type="password" placeholder="Password" name="password" value="{{request.form.password}}">
       <input class="btn btn-default" type="submit" value="Login">
     </form>
-    {% if error %}  <!-- {%  %} relates to a python expression which can be used in html -->
-      <p class="error"><strong>Error:</strong> {{ error }} <!-- {{  }} relates to a python variable --> 
-    {% endif %}
-    </div>
-</body>
-</html>
+  {% endblock %}
