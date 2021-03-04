@@ -14,17 +14,38 @@
 
 
 
-      <div class="col-md-6">
+      <div  class="col-md-6">
         <h3> Suggested tools </h3>
         <table class="table table-hover">
-          <tr><th> Tool </th> <th> Function </th> </tr>
-            {% for post in posts %}
-            <tr class="table-light" onclick="addremove(this,{{post.id}},'{{post.summary}}')"> <td>{{post.tool}} </td> <td> {{post.summary}}</td> </tr>
+          <tr>
+            <th> Tool </th>
+            <th> Function </th>
+            <th> id </th>
+          </tr>
+          {% for post in posts %}
+          <tr class="table-light">
+            <td>{{post.tool}} </td>
+            <td> {{post.summary}} </td>
+            <td> {{post.id}} </td>
+          </tr>
             {% endfor %}
         </table>
-        </div>
+      </div>
+
 
         <script type="text/javascript">
+
+        document.querySelector(".table").addEventListener('click', event => {
+          const row = event.target.closest("tr");
+          if (row.classList.contains("table-light")) {
+            var x = row.querySelectorAll("td");
+            var tool = x[0].innerHTML;
+            var summary = x[1].innerHTML;
+            var ident =x[2].innerHTML;
+            addremove(row,ident,summary);
+          }
+        });
+
 
         /*
         =====> Checking browser support for HTML5 and specifically availability of localStorage
