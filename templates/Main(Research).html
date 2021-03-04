@@ -1,0 +1,63 @@
+
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="jumbotron">
+      <h1> Welcome to Flask </h1>
+      <p> Click <a href="/logout">here</a> to logout.</p>
+      <a href="/selected"> Selected </a>
+    </div>
+    <ul class="nav nav-tabs">
+      <li class="nav-item"> <a class="nav-link active" href="/research">Research </a> </li>
+      <li class="nav-item"> <a class="nav-link" href="/writing">Writing </a> </li>
+      <li class="nav-item"> <a class="nav-link" href="/notes">Note taking </a> </li>
+    </ul>
+
+
+
+      <div class="col-md-6">
+        <h3> Suggested tools </h3>
+        <table class="table table-hover">
+          <tr><th> Tool </th> <th> Function </th> </tr>
+            {% for post in posts %}
+            <tr class="table-light" onclick="addremove(this,{{post.id}},'{{post.summary}}')"> <td>{{post.tool}} </td> <td> {{post.summary}}</td> </tr>
+            {% endfor %}
+        </table>
+        </div>
+
+        <script type="text/javascript">
+
+        /*
+        =====> Checking browser support for HTML5 and specifically availability of localStorage
+        */
+        //Function below might be redundant.
+        function CheckBrowser() {
+          if ('localStorage' in window && window['localStorage'] !== null) {
+            // We can use localStorage object to store data.
+            return true;
+          } else {
+                  return false;
+          }
+        }
+
+        function additem(index,item) {
+          localStorage.setItem(index,item);
+        }
+
+        function deleteitem(target) {
+          localStorage.removeItem(target);
+        }
+
+        function addremove(row,key,value) {
+          if(row.className == 'table-light'){
+            row.className = 'table-success';
+            additem(key,value);
+          }
+          else{
+            row.className = 'table-light';
+            deleteitem(key);
+          }
+        }
+
+
+        </script>
+    {% endblock %}

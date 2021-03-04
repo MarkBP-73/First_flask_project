@@ -8,21 +8,18 @@
     <ul class="nav nav-tabs">
       <li class="nav-item"> <a class="nav-link" href="/research">Research </a> </li>
       <li class="nav-item"> <a class="nav-link" href="/writing">Writing </a> </li>
-      <li class="nav-item"> <a class="nav-link" href="/notes">Note taking </a> </li>
+      <li class="nav-item"> <a class="nav-link active" href="/notes">Note taking </a> </li>
     </ul>
-
-
 
       <div class="col-md-6">
         <h3> Suggested tools </h3>
         <table class="table table-hover">
-          <tr><th> Tool </th> <th> Function </th> <th> Select </th></tr>
+          <tr><th> Tool </th> <th> Function </th></tr>
             {% for post in posts %}
-            <tr> <td>{{post.tool}} </td> <td> {{post.summary}}</td> <td> <button> select </button></td></tr>
+            <tr> <td>{{post.tool}} </td> <td> {{post.summary}}</td> <td> <button> {{post.id}} </button> </tr>
             {% endfor %}
         </table>
         </div>
-
         <script type="text/javascript">
 
         </script>

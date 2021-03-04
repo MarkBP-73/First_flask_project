@@ -1,0 +1,50 @@
+
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="jumbotron">
+      <h1> Welcome to Flask </h1>
+      <p> Click <a href="/logout">here</a> to logout.</p>
+    </div>
+
+      <div class="col-md-6">
+        <h3> Selection Summary </h3>
+        <table id="list" class="table table-hover">
+        </table>
+        </div>
+        <button onclick="ClearAll()"> Reset </button>
+
+        <script type="text/javascript">
+        /*
+        =====> Checking browser support for HTML5 and specifically availability of localStorage
+        */
+        //Function below might be redundant.
+        function CheckBrowser() {
+          if ('localStorage' in window && window['localStorage'] !== null) {
+            // We can use localStorage object to store data.
+            return true;
+          } else {
+                  return false;
+          }
+        }
+
+        function ShowAll(){
+          if (CheckBrowser()) {
+            var key ="";
+            var list ="<tr><th>index</th><th>Description</th></tr>";
+            var i = 0;
+            for (i=0;i <= localStorage.length-1; ++i) {
+              key=localStorage.key(i);
+              list += "<tr><td>" + key + "</td><td>" + localStorage.getItem(key) + "</td></tr>";
+            }
+            document.getElementById('list').innerHTML = list;
+                    }
+        }
+
+        function ClearAll(){
+          localStorage.clear();
+          ShowAll();
+        }
+        window.load=ShowAll();
+
+        </script>
+    {% endblock %}
